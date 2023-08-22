@@ -1,0 +1,3 @@
+rootProject.name = "MbbankObfuscator-Plugin"
+include ':app'
+include ':plugin'

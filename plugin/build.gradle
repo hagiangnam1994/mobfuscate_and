@@ -1,0 +1,32 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+//apply plugin: 'com.github.dcendents.android-maven'
+
+group='mbbank.secure.obfuscator'
+dependencies {
+    implementation "com.android.tools.build:gradle:4.2.0"
+    implementation "com.android.tools.build:transform-api:1.5.0"
+    implementation "commons-io:commons-io:2.11.0"
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+    implementation "com.github.CodingGay.BlackObfuscator:dex-tools:2.1"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url uri('localRepo')
+    }
+}
+
+group='mbbank.secure.obfuscator'
+version='1.0.0'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../localRepo'))
+        }
+    }
+}
