@@ -3,6 +3,7 @@ package mbbank.secure.obfuscator
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.internal.api.ReadOnlyProductFlavor
+import mbbank.secure.obfuscator.core.ObfDex
 import org.gradle.api.*
 
 class ObfPlugin implements Plugin<Project> {
@@ -31,7 +32,7 @@ class ObfPlugin implements Plugin<Project> {
                 void execute(Task task) {
                     task.getOutputs().getFiles().collect().each() { element ->
                         def file = new File(element.toString())
-                        mbbank.secure.obfuscator.core.ObfDex.obf(file.getAbsolutePath(),
+                        ObfDex.obf(file.getAbsolutePath(),
                                 sObfuscatorExtension.depth,
                                 sObfuscatorExtension.obfClass,
                                 sObfuscatorExtension.blackClass,
@@ -41,7 +42,7 @@ class ObfPlugin implements Plugin<Project> {
             }
             List<Task> tasks = new ArrayList<>()
             if (android != null) {
-                android.getApplicationVariants().all(new Action<ApplicationVariant>() {
+                android.applicationVariants.all(new Action<ApplicationVariant>() {
                     @Override
                     void execute(ApplicationVariant applicationVariant) {
                         File mappingFile = null
@@ -99,7 +100,7 @@ class ObfPlugin implements Plugin<Project> {
                 }
                 println("add Task $name")
             }
-        } catch(UnknownTaskException e1) {
+        } catch(UnknownTaskException ignored) {
             //Catch block
         }
     }
